@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>My Watch Party</title>
+  <style>
+    body { font: 13px/1.6 sans-serif; margin: 0; padding: 16px; background: #16161d; color: #eee; }
+    h1 { font-size: 16px; margin: 0 0 12px; }
+    label { display: block; font-size: 11px; opacity: 0.7; margin-bottom: 2px; }
+    input, select { width: 100%; box-sizing: border-box; padding: 8px; margin-bottom: 10px; border: 1px solid #444; border-radius: 6px; background: #22222c; color: #fff; }
+    button { width: 100%; padding: 9px; margin-bottom: 8px; border: 0; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; }
+    button:disabled { opacity: 0.4; cursor: default; }
+    #create { background: #e50914; color: #fff; }
+    #join { background: #2d6cdf; color: #fff; }
+    #leave { background: #444; color: #fff; display: none; }
+    #roomBox { display: none; text-align: center; padding: 10px; background: #22222c; border-radius: 8px; margin-bottom: 10px; }
+    #roomId { font-size: 24px; letter-spacing: 4px; font-weight: bold; margin: 4px 0; }
+    #peers { opacity: 0.8; }
+    #log { height: 120px; overflow-y: auto; background: #101016; border-radius: 8px; padding: 8px 10px; font-size: 12px; }
+    #log .err { color: #ff7a7a; }
+    #log div { margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+  <h1>🎬 My Watch Party</h1>
+
+  <div id="setup">
+    <label>接続方法</label>
+    <select id="transport">
+      <option value="discord">Discord（サーバー不要・おすすめ）</option>
+      <option value="server">自前サーバー</option>
+    </select>
+
+    <label>サービス</label>
+    <select id="service">
+      <option value="netflix">Netflix</option>
+      <option value="prime">Amazon プライムビデオ</option>
+    </select>
+
+    <div id="discordBox">
+      <label>Discord Botトークン</label>
+      <input id="token" type="password" placeholder="Botのトークン">
+      <label>チャンネルID</label>
+      <input id="channel" placeholder="同期に使うテキストチャンネルのID">
+      <button id="connect">Discordで接続</button>
+    </div>
+
+    <div id="serverBox" style="display:none">
+      <label>同期サーバーURL</label>
+      <input id="server" placeholder="ws://localhost:8787">
+      <button id="create">ルームを作成（ホスト）</button>
+      <label>ルームIDで参加</label>
+      <input id="room" placeholder="例: ABC123" maxlength="6">
+      <button id="join">ルームに参加</button>
+    </div>
+  </div>
+
+  <div id="roomBox">
+    <div id="roomLabel"></div>
+    <div id="roomId"></div>
+    <div id="peers"></div>
+  </div>
+  <button id="leave">退出する</button>
+
+  <div id="log"></div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
