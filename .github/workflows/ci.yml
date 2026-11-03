@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+        env:
+          # 単体テストに Electron 本体は不要なのでダウンロードを省く
+          ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+
+      - name: Unit tests (sync engine)
+        working-directory: app
+        run: npm test
+
+      - name: Syntax check
+        run: for f in app/*.js server/*.js extension/*.js; do node --check "$f"; done

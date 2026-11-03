@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "test": "node --test test/"
   },
   "dependencies": {
     "discord.js": "^14.15.0",
@@ -19,7 +20,7 @@
   "build": {
     "appId": "com.example.mywatchparty",
     "productName": "MyWatchParty",
-    "files": ["main.js", "sync.js", "cdp.js", "browser.js", "preload.js", "renderer/**"],
+    "files": ["main.js", "sync.js", "transports.js", "cdp.js", "browser.js", "preload.js", "renderer/**"],
     "win": { "target": "nsis" },
     "mac": { "target": "dmg" },
     "linux": { "target": "AppImage" }
